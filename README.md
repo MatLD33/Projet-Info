@@ -27,7 +27,7 @@ Création du meilleur projet d'info
 
 * filtre du bruit des données
 
-* interpolation linéaire/polynomiale pour obtenir une courbe de calibration
+* interpolation linéaire/polynomiale pour obtenir une courbe de calibration (FAIT à peu près) ==> manque la linéarisation par morceaux
 
 * autres…
 

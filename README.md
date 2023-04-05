@@ -30,3 +30,8 @@ Création du meilleur projet d'info
 * interpolation linéaire/polynomiale pour obtenir une courbe de calibration
 
 * autres…
+
+### Problèmes rencontrés
+* les plots s'ajustent bizreement à la fenêtre de l'interface
+
+* la grille ne s'affiche pas 

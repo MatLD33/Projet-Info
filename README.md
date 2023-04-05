@@ -23,7 +23,7 @@ Création du meilleur projet d'info
 
 * calcul de la déviation standard d’un palier pour pouvoir comparer la stabilité des différents paliers (FAIT)
 
-* calcul de la vitesse de chauffe/refroidissement (°C/min) des rampes
+* calcul de la vitesse de chauffe/refroidissement (°C/min) des rampes (faisabale quand on aura l'approximation linéaire par morceaux)
 
 * filtre du bruit des données
 

@@ -16,6 +16,14 @@ Création du meilleur projet d'info
 
 * Mise en place d’une version autonome du logiciel (qui soit utilisable sur les ordinateurs des opérateurs)
   
+* Réfléchir à fusionner les fichiers d'acquisition des données de ref et à étalonner
+
+* Faire l'interpolation entre les données de ref et les données à étalonner (obtenir une réalisation)
+
+* Choisir la sonde à afficher
+
+* Récupérer les dates/temps de début et de fin de chaque palier + début acquisition
+
 ### Fonctions possibles :
 * détection du nombre et du nom des capteurs à traiter
 
@@ -32,6 +40,6 @@ Création du meilleur projet d'info
 * autres…
 
 ### Problèmes rencontrés
-* les plots s'ajustent bizreement à la fenêtre de l'interface
+* les plots s'ajustent bizarrement à la fenêtre de l'interface
 
 * la grille ne s'affiche pas 

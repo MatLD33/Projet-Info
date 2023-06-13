@@ -16,16 +16,16 @@ Création du meilleur projet d'info
 
 * Mise en place d’une version autonome du logiciel (qui soit utilisable sur les ordinateurs des opérateurs)
   
-* Réfléchir à fusionner les fichiers d'acquisition des données de ref et à étalonner
+* Réfléchir à fusionner les fichiers d'acquisition des données de ref et à étalonner (A FAIRE ABSOLUMENT)
 
-* Faire l'interpolation entre les données de ref et les données à étalonner (obtenir une réalisation)
+* Faire l'interpolation entre les données de ref et les données à étalonner (obtenir une réalisation) (FAIT)
 
-* Choisir la sonde à afficher
+* Choisir la sonde à afficher (FAIT)
 
-* Récupérer les dates/temps de début et de fin de chaque palier + début acquisition
+* Récupérer les dates/temps de début et de fin de chaque palier (FAIT) + début acquisition
 
 ### Fonctions possibles :
-* détection du nombre et du nom des capteurs à traiter
+* détection du nombre et du nom des capteurs à traiter (???)
 
 * détection automatique des paliers de stabilité de température/pression selon un critère de stabilité défini (par exemple, erreur type) (FAIT)
 
@@ -33,9 +33,9 @@ Création du meilleur projet d'info
 
 * calcul de la vitesse de chauffe/refroidissement (°C/min) des rampes (faisabale quand on aura l'approximation linéaire par morceaux)
 
-* filtre du bruit des données
+* filtre du bruit des données (Voir si c'est vraiment utile)
 
-* interpolation linéaire/polynomiale pour obtenir une courbe de calibration (FAIT à peu près) ==> manque la linéarisation par morceaux
+* interpolation linéaire/polynomiale pour obtenir une courbe de calibration (FAIT à peu près) ==> manque la linéarisation par morceaux (FAIT)
 
 * autres…
 

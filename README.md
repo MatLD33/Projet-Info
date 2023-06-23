@@ -18,11 +18,11 @@ Création du meilleur projet d'info
   
 * Réfléchir à fusionner les fichiers d'acquisition des données de ref et à étalonner (A FAIRE ABSOLUMENT)
 
-* Faire l'interpolation entre les données de ref et les données à étalonner (obtenir une réalisation) (FAIT)
+* Faire l'interpolation entre les données de ref et les données à étalonner (obtenir une réalisation) (FAIT - au sein d'un fichier)
 
 * Choisir la sonde à afficher (FAIT)
 
-* Récupérer les dates/temps de début et de fin de chaque palier (FAIT) + début acquisition
+* Récupérer les dates/temps de début et de fin de chaque palier (EN COURS) + début acquisition
 
 ### Fonctions possibles :
 * détection du nombre et du nom des capteurs à traiter (???)
@@ -42,4 +42,4 @@ Création du meilleur projet d'info
 ### Problèmes rencontrés
 * les plots s'ajustent bizarrement à la fenêtre de l'interface
 
-* la grille ne s'affiche pas 
+* formats de temps trop différents entre les fichiers

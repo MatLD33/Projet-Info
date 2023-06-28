@@ -1,5 +1,6 @@
-from lecture import *
+from GUI.utils import *
 import tkinter as tk
+import tkinter.ttk as ttk
 from tkinter import filedialog
 
 import pandas as pd
@@ -8,7 +9,6 @@ import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
-from tkinter import ttk
 import matplotlib.pyplot as plt
 
 

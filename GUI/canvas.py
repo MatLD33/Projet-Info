@@ -1,8 +1,14 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 
+import matplotlib
 
-class MyCanvas(tk.Canvas):
-    def __init__(self, plotspace, master, **kwargs):
-        super().__init__(master, **kwargs)
+matplotlib.use("TkAgg")
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+
+class MyCanvas(FigureCanvasTkAgg):
+    def __init__(self, figure, plotspace, master):
+        super().__init__(figure, master)
         self.plotpsace = plotspace
+        self.figure = figure

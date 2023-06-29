@@ -36,11 +36,11 @@ def plot_csv2(path):
     p1 = figure.add_subplot(111)
 
     p1.plot(val)
-    plt.figure()
-    plt.plot(val)
-    plt.xlabel("Balayage")
-    plt.ylabel(data_to_plot)
-    plt.grid()
+    # plt.figure()
+    # plt.plot(val)
+    # plt.xlabel("Balayage")
+    # plt.ylabel(data_to_plot)
+    # plt.grid()
 
     try:
         plt.savefig("Plot/" + new_name(path[5:], "png"))

@@ -22,25 +22,33 @@ class Toolbar(tk.Frame):
         self.menu = MenuHandler(self.master, self, self.plotspace)
 
         self.file.add_commands(
-            ["Nouveau (Ctrl + N)", "Enregistrer", "Nettoyer", "Quitter"],
+            ["Nouveau (Ctrl + N)", "Enregistrer (Ctrl + S)", "Nettoyer", "Quitter"],
             [
                 self.menu.createCurveMenu,
-                lambda: print("to bind"),
+                self.plotspace.save,
                 self.plotspace.clear,
                 self.on_closing,
             ],
         )
 
         self.tools.add_commands(
-            ["Annuler (Ctrl + Z)", "Paliers", "Interpolation"],
+            [
+                "Annuler (Ctrl + Z)",
+                "Paliers",
+                "Rég linéaire",
+                "Interpolation poly (Ctrl + I)",
+            ],
             [
                 lambda: print("to bind"),
                 lambda: print("to bind"),
+                self.plotspace.LinearRegression,
                 self.menu.createInterpolationMenu,
             ],
         )
 
         self.master.bind("<Control-n>", self.menu.createCurveMenu)
+        self.master.bind("<Control-i>", self.menu.createInterpolationMenu)
+        self.master.bind("<Control-s>", self.plotspace.save)
 
     def on_closing(self):
         if tk.messagebox.askokcancel(

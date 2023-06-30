@@ -10,6 +10,8 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 
+from tkinter import filedialog
+
 from GUI.utils import *
 
 
@@ -27,7 +29,6 @@ class Plotspace(tk.Frame):
         self.image_tk_list = []
         self.current = 0
         self.scale = []
-        # self.offset = []
         self.current_image = None
         self.mode = "BLANK"
 
@@ -60,5 +61,12 @@ class Plotspace(tk.Frame):
         self.canvas.draw()
         self.canvas.get_tk_widget().grid()
 
+    def LinearRegression(self):
+        self.interpolation(1)
+
     def clear(self):
         self.fig.clear()
+
+    def save(self, event=None):
+        name = filedialog.asksaveasfilename()
+        self.fig.savefig(name)

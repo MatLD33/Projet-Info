@@ -14,5 +14,5 @@ class MenuHandler:
     def createCurveMenu(self, event=None):
         CurveMenu(self.master, self.toolbar, self.plotspace)
 
-    def createInterpolationMenu(self):
+    def createInterpolationMenu(self, event=None):
         InterpolationMenu(self.master, self.toolbar, self.plotspace)

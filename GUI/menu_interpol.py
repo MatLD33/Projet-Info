@@ -16,17 +16,23 @@ class InterpolationMenu(tk.Toplevel):
         self.protocol("WM_DELETE_WINDOW", self.close)
 
         self.label = ttk.Label(
-            self, text="Choisir le degrés du polynôme d'interpolation"
+            self, text="Choisir le degré du polynôme d'interpolation"
         )
         self.label.pack(pady=10)
 
         self.deg = tk.IntVar()
         self.entry = ttk.Entry(
             self,
-            text="Degrès d'interpolation",
+            text="Degré d'interpolation",
             textvariable=self.deg,
         )
         self.entry.pack(pady=10)
+
+        self.label_p = ttk.Label(self, text="Polynôme d'interpolation :")
+        self.label_p.pack(pady=10)
+
+        self.label_poly = ttk.Label(self, text="0")
+        self.label_poly.pack(pady=10)
 
         self.button = ttk.Button(self, text="Valider", command=self.interpolation)
         self.button.pack(pady=10)
@@ -40,7 +46,9 @@ class InterpolationMenu(tk.Toplevel):
             self.label.config(text="Veuillez entrer un entier")
         else:
             self.plotspace.interpolation(self.deg.get())
-            self.close()
+            self.label_poly.config(text=self.plotspace.polystring)
+            self.label_poly.pack(pady=10)
+            self.button.config(text="Fermer", command=self.close)
 
     def close(self):
         self.destroy()

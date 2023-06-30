@@ -17,7 +17,7 @@ from GUI.utils import *
 
 class Plotspace(tk.Frame):
     def __init__(self, master):
-        super().__init__(master)
+        super().__init__(master, bg="#dddddd")
         self.master = master
         self.reinit()
 
@@ -57,7 +57,21 @@ class Plotspace(tk.Frame):
         self.canvas.poly = polynomial_interpolation(
             self.canvas.abs, self.canvas.ord, deg
         )
-        self.sub.plot(self.canvas.abs, self.canvas.poly(self.canvas.abs), "r")
+
+        coef = self.canvas.poly.coef
+        coef = np.round(coef, 3)
+        self.polystring = ""
+        for i in range(len(coef)):
+            self.polystring += f"{coef[i]}x^{len(coef)-i-1} + "
+        self.polystring = self.polystring[:-3]
+
+        self.sub.plot(
+            self.canvas.abs,
+            self.canvas.poly(self.canvas.abs),
+            "r",
+            label=f"Interpolation : {self.polystring}",
+        )
+        self.sub.legend()
         self.canvas.draw()
         self.canvas.get_tk_widget().grid()
 

@@ -22,10 +22,11 @@ class Toolbar(tk.Frame):
         self.menu = MenuHandler(self.master, self, self.plotspace)
 
         self.file.add_commands(
-            ["Nouveau", "Enregistrer", "Quitter"],
+            ["Nouveau (Ctrl + N)", "Enregistrer", "Nettoyer", "Quitter"],
             [
                 self.menu.createCurveMenu,
                 lambda: print("to bind"),
+                self.plotspace.clear,
                 self.on_closing,
             ],
         )
@@ -35,12 +36,11 @@ class Toolbar(tk.Frame):
             [
                 lambda: print("to bind"),
                 lambda: print("to bind"),
-                lambda: print("to bind"),
+                self.menu.createInterpolationMenu,
             ],
         )
 
-    def open_file(self, event=None):
-        pass
+        self.master.bind("<Control-n>", self.menu.createCurveMenu)
 
     def on_closing(self):
         if tk.messagebox.askokcancel(

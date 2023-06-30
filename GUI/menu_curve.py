@@ -33,16 +33,27 @@ class CurveMenu(tk.Toplevel):
 
         self.label_a = ttk.Label(self, text="Donnée en abscisse")
         self.label_a.pack(pady=10)
+        self.label_a_check = False
 
         self.button_a = ttk.Button(self, text="Choisir", command=self.add_curve)
         self.button_a.pack(pady=10)
+        self.button_a_check = False
 
         self.button_v = ttk.Button(self, text="Valider", command=self.close)
+        self.button_v.pack(pady=10)
 
     def check(self):
-        if not self.donnee_x.get():
+        if self.donnee_x.get():
+            if self.label_a_check:
+                self.label_a.pack()
+                self.label_a_check = False
+                self.button_a.pack()
+                self.button_a_check = False
+        else:
             self.label_a.pack_forget()
+            self.label_a_check = True
             self.button_a.pack_forget()
+            self.button_a_check = True
 
     def add_curve(self):
         path = tk.filedialog.askopenfilename(initialdir="Data")

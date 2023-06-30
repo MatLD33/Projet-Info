@@ -3,6 +3,7 @@ import tkinter.ttk as ttk
 from GUI.canvas import MyCanvas
 
 import matplotlib
+import numpy as np
 
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -17,7 +18,6 @@ class Plotspace(tk.Frame):
         super().__init__(master)
         self.master = master
         self.reinit()
-        self.mode = "BLANK"
 
         self.fig = Figure(dpi=100)
         self.canvas = MyCanvas(self.fig, self, self.master)
@@ -38,11 +38,27 @@ class Plotspace(tk.Frame):
         self.current = len(self.image_list) - 1
 
         x, data_to_plot, val = create_data(path, 2)
+        self.canvas.abs = x
+        self.canvas.ord = val
+
         self.fig.clear()
-        p1 = self.fig.add_subplot(111)
-        p1.plot(x, val)
-        p1.set_xlabel("Balayage")
-        p1.set_ylabel(data_to_plot)
-        p1.grid()
+        self.sub = self.fig.add_subplot(111)
+        self.sub.plot(self.canvas.abs, self.canvas.ord)
+        self.sub.set_xlabel("Balayage")
+        self.sub.set_ylabel(data_to_plot)
+        self.sub.grid()
         self.canvas.draw()
         self.canvas.get_tk_widget().grid()
+
+    def interpolation(self, deg):
+        if self.canvas.poly is not None:
+            self.sub.lines.pop(1)
+        self.canvas.poly = polynomial_interpolation(
+            self.canvas.abs, self.canvas.ord, deg
+        )
+        self.sub.plot(self.canvas.abs, self.canvas.poly(self.canvas.abs), "r")
+        self.canvas.draw()
+        self.canvas.get_tk_widget().grid()
+
+    def clear(self):
+        self.fig.clear()

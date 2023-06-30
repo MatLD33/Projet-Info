@@ -30,9 +30,6 @@ class App:
 
         self.toolbar.link_to(self.plotspace)
 
-        # shortcuts binding
-        self.master.bind("<Control-n>", self.toolbar.open_file)
-
 
 def on_closing():
     if askokcancel(

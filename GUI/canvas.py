@@ -12,3 +12,7 @@ class MyCanvas(FigureCanvasTkAgg):
         super().__init__(figure, master)
         self.plotpsace = plotspace
         self.figure = figure
+        self.master = master
+        self.abs = []
+        self.ord = []
+        self.poly = None

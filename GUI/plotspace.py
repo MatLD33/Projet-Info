@@ -6,7 +6,6 @@ import matplotlib
 import numpy as np
 
 matplotlib.use("TkAgg")
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 
@@ -32,21 +31,29 @@ class Plotspace(tk.Frame):
         self.current_image = None
         self.mode = "BLANK"
 
-    def add_curve(self, path):
-        self.reinit()
-        self.image_list.append(path)
-        # self.image_tk_list.append(tk.PhotoImage(file="Data/" + path))
-        self.current = len(self.image_list) - 1
-
+    def set_y(self, path):
         x, data_to_plot, val = create_data(path, 2)
-        self.canvas.abs = x
         self.canvas.ord = val
+        self.canvas.abs = x
+        self.canvas.ylab = data_to_plot
+        self.canvas.xlab = "Balayage"
+
+    def set_x(self, path):
+        x, data_to_plot, val = create_data(path, 2)
+        self.canvas.abs = val
+        self.canvas.xlab = data_to_plot
+
+    def add_curve(self):
+        self.reinit()
+        # self.image_list.append(path)
+        # # self.image_tk_list.append(tk.PhotoImage(file="Data/" + path))
+        # self.current = len(self.image_list) - 1
 
         self.fig.clear()
         self.sub = self.fig.add_subplot(111)
         self.sub.plot(self.canvas.abs, self.canvas.ord)
-        self.sub.set_xlabel("Balayage")
-        self.sub.set_ylabel(data_to_plot)
+        self.sub.set_xlabel(self.canvas.xlab)
+        self.sub.set_ylabel(self.canvas.ylab)
         self.sub.grid()
         self.canvas.draw()
         self.canvas.get_tk_widget().grid()

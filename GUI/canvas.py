@@ -15,4 +15,6 @@ class MyCanvas(FigureCanvasTkAgg):
         self.master = master
         self.abs = []
         self.ord = []
+        self.xlab = ""
+        self.ylab = ""
         self.poly = None

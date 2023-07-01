@@ -28,14 +28,14 @@ class CurveMenu(tk.Toplevel):
         self.label_o = ttk.Label(self, text="Donnée en ordonnée :")
         self.label_o.place(x=10, y=50)
 
-        self.button_o = ttk.Button(self, text="Choisir", command=self.add_curve)
+        self.button_o = ttk.Button(self, text="Choisir", command=self.set_y)
         self.button_o.place(x=150, y=50)
 
         self.label_a = ttk.Label(self, text="Donnée en abscisse :")
         self.label_a.place(x=10, y=100)
         self.label_a_check = False
 
-        self.button_a = ttk.Button(self, text="Choisir", command=self.add_curve)
+        self.button_a = ttk.Button(self, text="Choisir", command=self.set_x)
         self.button_a.place(x=150, y=100)
         self.button_a_check = False
 
@@ -55,12 +55,23 @@ class CurveMenu(tk.Toplevel):
             self.button_a.place_forget()
             self.button_a_check = True
 
-    def add_curve(self):
+    def set_y(self):
         path = tk.filedialog.askopenfilename(initialdir="Data")
         path_end = "Data/" + path.split("/")[-1]
 
-        self.plotspace.add_curve(path_end)
-        self.destroy()
+        self.plotspace.set_y(path_end)
+        self.label_choice = ttk.Label(self, text=path.split("/")[-1])
+        self.label_choice.place(x=10, y=75)
+
+    def set_x(self):
+        self.plotspace.xexists = True
+        path = tk.filedialog.askopenfilename(initialdir="Data")
+        path_end = "Data/" + path.split("/")[-1]
+
+        self.plotspace.set_x(path_end)
+        self.label_choice = ttk.Label(self, text=path.split("/")[-1])
+        self.label_choice.place(x=10, y=125)
 
     def close(self):
+        self.plotspace.add_curve()
         self.destroy()

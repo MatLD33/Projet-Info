@@ -15,6 +15,10 @@ class CurveMenu(tk.Toplevel):
         self.geometry("250x200")
         self.resizable(False, False)
         self.protocol("WM_DELETE_WINDOW", self.close)
+        self.grab_set()
+
+        self.label = ttk.Label(self, text="Données à ploter")
+        self.label.place(x=90, y=20)
 
         self.donnee_x = tk.BooleanVar()
         self.checkb = ttk.Checkbutton(

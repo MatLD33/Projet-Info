@@ -15,9 +15,10 @@ from GUI.utils import *
 
 
 class Plotspace(tk.Frame):
-    def __init__(self, master):
+    def __init__(self, master, sidebar):
         super().__init__(master, bg="#dddddd")
         self.master = master
+        self.sidebar = sidebar
         self.reinit()
 
         self.fig = Figure(dpi=100)
@@ -30,6 +31,9 @@ class Plotspace(tk.Frame):
         self.scale = []
         self.current_image = None
         self.mode = "BLANK"
+
+    def link_to(self, sidebar):
+        self.sidebar = sidebar
 
     def set_y(self, path):
         x, data_to_plot, val = create_data(path, 2)
@@ -54,6 +58,8 @@ class Plotspace(tk.Frame):
         self.sub.plot(self.canvas.abs, self.canvas.ord)
         self.sub.set_xlabel(self.canvas.xlab)
         self.sub.set_ylabel(self.canvas.ylab)
+        self.sidebar.x_writer(self.canvas.xlab)
+        self.sidebar.y_writer(self.canvas.ylab)
         self.sub.grid()
         self.canvas.draw()
         self.canvas.get_tk_widget().grid()
@@ -71,6 +77,8 @@ class Plotspace(tk.Frame):
         for i in range(len(coef)):
             self.polystring += f"{coef[i]}x^{len(coef)-i-1} + "
         self.polystring = self.polystring[:-3]
+
+        self.sidebar.poly_writer(self.polystring)
 
         self.sub.plot(
             self.canvas.abs,
@@ -91,3 +99,6 @@ class Plotspace(tk.Frame):
     def save(self, event=None):
         name = filedialog.asksaveasfilename()
         self.fig.savefig(name)
+
+    def set_stage(self, w_size, precision):
+        pass

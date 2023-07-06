@@ -5,6 +5,7 @@ from tkinter import filedialog
 from GUI.utils import *
 from GUI.toolbar import *
 from GUI.plotspace import *
+from GUI.sidebar import *
 
 import matplotlib
 
@@ -18,17 +19,20 @@ class App:
     def __init__(self, master):
         self.master = master
         self.master.state("zoomed")
+        self.master.columnconfigure(0, weight=3)
+        self.master.columnconfigure(1, weight=1)
 
         self.toolbar = Toolbar(self.master, None)
-        self.toolbar.grid(row=0, column=0, columnspan=3, sticky="ew")
+        self.toolbar.grid(row=0, column=0, columnspan=2, sticky="ew")
 
-        self.plotspace = Plotspace(self.master)
-        self.plotspace.grid(row=1, column=1, sticky="ns")
+        self.plotspace = Plotspace(self.master, None)
+        self.plotspace.grid(row=1, column=0)
 
-        # self.sidebar = Sidebar(self.master, self.plotspace)
-        # self.sidebar.grid(row=1, column=2, sticky="ns")
+        self.sidebar = Sidebar(self.master, self.plotspace)
+        self.sidebar.grid(row=1, column=1, sticky="ns")
 
         self.toolbar.link_to(self.plotspace)
+        self.plotspace.link_to(self.sidebar)
 
 
 def on_closing():

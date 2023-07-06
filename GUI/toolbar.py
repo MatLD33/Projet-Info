@@ -40,7 +40,7 @@ class Toolbar(tk.Frame):
             ],
             [
                 lambda: print("to bind"),
-                lambda: print("to bind"),
+                self.menu.createStageMenu,
                 self.plotspace.LinearRegression,
                 self.menu.createInterpolationMenu,
             ],

@@ -34,8 +34,10 @@ class App:
         self.toolbar.link_to(self.plotspace)
         self.plotspace.link_to(self.sidebar)
 
+        self.master.bind("<Control-q>", on_closing)
 
-def on_closing():
+
+def on_closing(event=None):
     if askokcancel(
         "Quitter", "Toute progression non sauvegardée sera perdue.", icon="warning"
     ):

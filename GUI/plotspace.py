@@ -8,6 +8,7 @@ import numpy as np
 matplotlib.use("TkAgg")
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import NavigationToolbar2Tk
 
 from tkinter import filedialog
 
@@ -24,6 +25,11 @@ class Plotspace(tk.Frame):
         self.fig = Figure(dpi=100)
         self.canvas = MyCanvas(self.fig, self, self.master)
 
+        # self.navbar = NavigationToolbar2Tk(self.canvas, self.master)
+        # self.navbar.update()
+
+        self.canvas.get_tk_widget().grid()
+
     def reinit(self):
         self.image_list = []
         self.image_tk_list = []
@@ -37,6 +43,8 @@ class Plotspace(tk.Frame):
 
     def set_y(self, path):
         x, data_to_plot, val = create_data(path, 2)
+        _, _, times = create_data(path, 1, data_type="time")
+        self.canvas.times = times
         self.canvas.ord = val
         self.canvas.abs = x
         self.canvas.ylab = data_to_plot
@@ -101,4 +109,7 @@ class Plotspace(tk.Frame):
         self.fig.savefig(name)
 
     def set_stage(self, w_size, precision):
-        pass
+        stage_matrix = detect_stable_stage(
+            self.canvas.ord, self.canvas.times, precision, w_size
+        )
+        self.sidebar.matrix_writer(stage_matrix)

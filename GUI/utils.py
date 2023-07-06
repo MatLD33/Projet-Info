@@ -66,7 +66,7 @@ def plot_csv(path, n):
     plt.show()
 
 
-def detect_stable_stage(path, precision=0.1, window_size=100, plot=False):
+def detect_stable_stage(values, times, precision=0.1, window_size=100, plot=False):
     """
     Cette fonction permet de détecter les paliers stables d'un fichier csv
     Elle retourne une matrice de taille (nb_stages,4) avec :
@@ -82,10 +82,7 @@ def detect_stable_stage(path, precision=0.1, window_size=100, plot=False):
     window_size : taille de la fenêtre de calcul de la variance
     plot : booléen pour afficher le graphe de la variance
     """
-    x, data_to_plot, values = create_data(path, 2)  # Récupération des données
-    x, data_to_plot, times = create_data(
-        path, 1, data_type="time"
-    )  # Récupération des données
+    window_size = int(window_size)
 
     n = len(values)
     variances = np.empty(n - window_size)  # tableau des variances

@@ -17,4 +17,5 @@ class MyCanvas(FigureCanvasTkAgg):
         self.ord = []
         self.xlab = ""
         self.ylab = ""
+        self.times = []
         self.poly = None

@@ -68,7 +68,6 @@ class CurveMenu(tk.Toplevel):
         self.label_choice.place(x=10, y=75)
 
     def set_x(self):
-        self.plotspace.xexists = True
         path = tk.filedialog.askopenfilename(initialdir="Data")
         path_end = "Data/" + path.split("/")[-1]
 

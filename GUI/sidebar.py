@@ -1,6 +1,9 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 
+import numpy as np
+import pandas as pd
+
 
 class Sidebar(ttk.Frame):
     def __init__(self, master, plotspace):
@@ -28,6 +31,25 @@ class Sidebar(ttk.Frame):
 
     def matrix_writer(self, matrix):
         self.matrixlab = ttk.Label(
-            self, text=f"Matrice = \n {matrix}", font=("Arial", 12)
+            self, text=f"Matrice des paliers :", font=("Arial", 14)
         )
         self.matrixlab.grid(row=6, column=0)
+
+        self.matrix = tk.Text(self)
+        self.matrix.grid(row=7, column=0)
+        nb_stages = len(matrix)
+        ind = np.arange(nb_stages)
+        df = pd.DataFrame(
+            matrix,
+            index=ind,
+            columns=[
+                "Debut (Bal)",
+                "Fin (Bal)",
+                "Debut (Temps)",
+                "Fin (Temps)",
+                "Moyenne",
+                "Variance",
+            ],
+        )
+
+        self.matrix.insert(tk.END, df)

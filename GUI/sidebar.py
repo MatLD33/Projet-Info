@@ -1,5 +1,6 @@
 import tkinter as tk
 import tkinter.ttk as ttk
+from tkinter import filedialog
 
 import numpy as np
 import pandas as pd
@@ -11,6 +12,8 @@ class Sidebar(ttk.Frame):
         self.plotspace = plotspace
         self.master = master
         self.path = None
+        self.stage_matrix = None
+        self.time_matrix = None
 
         self.init_lab = ttk.Label(self, text="Infos des courbes", font=("Arial", 16))
         self.init_lab.grid(row=0, column=0, columnspan=2)
@@ -48,7 +51,7 @@ class Sidebar(ttk.Frame):
         self.matrix.grid(row=7, column=0, columnspan=2)
         nb_stages = len(matrix)
         ind = np.arange(nb_stages)
-        df = pd.DataFrame(
+        self.df = pd.DataFrame(
             matrix,
             index=ind,
             columns=[
@@ -59,14 +62,20 @@ class Sidebar(ttk.Frame):
             ],
         )
 
-        df["tps init"] = times[:, 0]
-        df["tps fin"] = times[:, 1]
-        df["Durée"] = times[:, 2]
+        self.df["tps init"] = times[:, 0]
+        self.df["tps fin"] = times[:, 1]
+        self.df["Durée"] = times[:, 2]
 
-        self.matrix.insert(tk.END, df)
+        self.matrix.insert(tk.END, self.df)
 
     def save(self):
-        pass
+        name = filedialog.asksaveasfilename(
+            initialdir=".",
+            title="Enregistrer sous",
+            filetypes=(("csv files", "*.csv"), ("all files", "*.*")),
+        )
+        if name:
+            self.df.to_csv(name + ".csv", index=False, sep=",")
 
     def clear(self):
         self.xlab.config(text=f"X : None")

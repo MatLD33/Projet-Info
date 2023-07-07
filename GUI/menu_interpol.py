@@ -28,6 +28,13 @@ class InterpolationMenu(tk.Toplevel):
         )
         self.entry.pack(pady=10)
 
+        self.bool_stage = tk.BooleanVar()
+        self.bool_stage.set(False)
+        self.checkb = ttk.Checkbutton(
+            self, text="Interpoler les paliers ?", variable=self.bool_stage
+        )
+        self.checkb.pack(pady=10)
+
         self.label_p = ttk.Label(self, text="Polynôme d'interpolation :")
         self.label_p.pack(pady=10)
 
@@ -45,7 +52,10 @@ class InterpolationMenu(tk.Toplevel):
         except:
             self.label.config(text="Veuillez entrer un entier")
         else:
-            self.plotspace.interpolation(self.deg.get())
+            if not self.bool_stage.get():
+                self.plotspace.interpolation(self.deg.get())
+            else:
+                self.plotspace.interpolation_stage(self.deg.get())
             self.label_poly.config(text=self.plotspace.polystring)
             self.label_poly.pack(pady=10)
             self.button.config(text="Fermer", command=self.close)

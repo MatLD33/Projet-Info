@@ -78,8 +78,8 @@ class Plotspace(tk.Frame):
         self.canvas.poly, coef = polynomial_interpolation(
             self.canvas.abs, self.canvas.ord, deg
         )
-        print(self.canvas.poly)
-        # coef = np.round(coef, 3)
+
+        coef = np.round(coef, 3)
         self.polystring = ""
         for i in range(len(coef)):
             self.polystring += f"{coef[i]}x^{len(coef) - i -1} + "
@@ -90,7 +90,34 @@ class Plotspace(tk.Frame):
         self.sub.plot(
             self.canvas.abs,
             self.canvas.poly(self.canvas.abs),
-            "r",
+            label=f"Interpolation : {self.polystring}",
+        )
+        self.sub.legend()
+        self.canvas.draw()
+        self.canvas.get_tk_widget().grid()
+
+    def interpolation_stage(self, deg):
+        if self.canvas.poly is not None:
+            self.sub.lines.pop(1)
+
+        abs_stage = []
+        ord_stage = []
+        for (start, end, mean, var) in self.sidebar.stage_matrix:
+            abs_stage += list(self.canvas.abs[int(start) : int(end)])
+            ord_stage += list(mean * np.ones(int(end) - int(start)))
+        self.canvas.poly, coef = polynomial_interpolation(abs_stage, ord_stage, deg)
+
+        coef = np.round(coef, 3)
+        self.polystring = ""
+        for i in range(len(coef)):
+            self.polystring += f"{coef[i]}x^{len(coef) - i -1} + "
+        self.polystring = self.polystring[:-3]
+
+        self.sidebar.poly_writer(self.polystring)
+
+        self.sub.plot(
+            self.canvas.abs,
+            self.canvas.poly(self.canvas.abs),
             label=f"Interpolation : {self.polystring}",
         )
         self.sub.legend()
@@ -109,7 +136,14 @@ class Plotspace(tk.Frame):
         self.fig.savefig(name)
 
     def set_stage(self, w_size, precision):
-        stage_matrix, time_matrix = detect_stable_stage(
+        self.sidebar.stage_matrix, self.sidebar.time_matrix = detect_stable_stage(
             self.canvas.ord, self.canvas.times, precision, w_size
         )
-        self.sidebar.matrix_writer(stage_matrix, time_matrix)
+        self.sidebar.matrix_writer(self.sidebar.stage_matrix, self.sidebar.time_matrix)
+
+        for (start, end, mean, var) in self.sidebar.stage_matrix:
+            self.sub.plot(
+                self.canvas.abs[int(start) : int(end)],
+                mean * np.ones(int(end) - int(start)),
+                color="red",
+            )

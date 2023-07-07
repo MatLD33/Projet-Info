@@ -45,9 +45,6 @@ Création du meilleur projet d'info
 * formats de temps trop différents entre les fichiers
 
 ### Faire NAO
-* Pb polynome DONE
 * Interpolation sur matrice de paliers
-* Afficher durée DONE
 * Choisir colonne
-* Save csv
 * Dessin fenêtre

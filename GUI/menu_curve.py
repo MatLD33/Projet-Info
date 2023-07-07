@@ -18,7 +18,7 @@ class CurveMenu(tk.Toplevel):
         self.grab_set()
 
         self.label = ttk.Label(self, text="Données à ploter")
-        self.label.place(x=90, y=20)
+        self.label.place(x=70, y=10)
 
         self.donnee_x = tk.BooleanVar()
         self.checkb = ttk.Checkbutton(
@@ -27,7 +27,7 @@ class CurveMenu(tk.Toplevel):
             variable=self.donnee_x,
             command=self.check,
         )
-        self.checkb.pack(pady=10)
+        self.checkb.place(x=50, y=25)
 
         self.label_o = ttk.Label(self, text="Donnée en ordonnée :")
         self.label_o.place(x=10, y=50)
@@ -45,6 +45,8 @@ class CurveMenu(tk.Toplevel):
 
         self.button_v = ttk.Button(self, text="Valider", command=self.close)
         self.button_v.place(x=90, y=150)
+
+        self.master.bind("<Return>", self.close)
 
     def check(self):
         if self.donnee_x.get():
@@ -64,7 +66,8 @@ class CurveMenu(tk.Toplevel):
         path_end = "Data/" + path.split("/")[-1]
 
         self.plotspace.set_y(path_end)
-        self.label_choice = ttk.Label(self, text=path.split("/")[-1])
+        lab = path.split("/")[-1]
+        self.label_choice = ttk.Label(self, text=f"Fichier : {lab}")
         self.label_choice.place(x=10, y=75)
 
     def set_x(self):
@@ -72,7 +75,8 @@ class CurveMenu(tk.Toplevel):
         path_end = "Data/" + path.split("/")[-1]
 
         self.plotspace.set_x(path_end)
-        self.label_choice = ttk.Label(self, text=path.split("/")[-1])
+        lab = path.split("/")[-1]
+        self.label_choice = ttk.Label(self, text=f"Fichier : {lab}")
         self.label_choice.place(x=10, y=125)
 
     def close(self):

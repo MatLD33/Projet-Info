@@ -22,7 +22,12 @@ class Toolbar(tk.Frame):
         self.menu = MenuHandler(self.master, self, self.plotspace)
 
         self.file.add_commands(
-            ["Nouveau (Ctrl + N)", "Enregistrer (Ctrl + S)", "Nettoyer", "Quitter"],
+            [
+                "Nouveau (Ctrl + N)",
+                "Enregistrer plot (Ctrl + S)",
+                "Nettoyer",
+                "Quitter",
+            ],
             [
                 self.menu.createCurveMenu,
                 self.plotspace.save,

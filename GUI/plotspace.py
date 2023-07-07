@@ -75,15 +75,14 @@ class Plotspace(tk.Frame):
     def interpolation(self, deg):
         if self.canvas.poly is not None:
             self.sub.lines.pop(1)
-        self.canvas.poly = polynomial_interpolation(
+        self.canvas.poly, coef = polynomial_interpolation(
             self.canvas.abs, self.canvas.ord, deg
         )
-
-        coef = self.canvas.poly.coef
-        coef = np.round(coef, 3)
+        print(self.canvas.poly)
+        # coef = np.round(coef, 3)
         self.polystring = ""
         for i in range(len(coef)):
-            self.polystring += f"{coef[i]}x^{len(coef)-i-1} + "
+            self.polystring += f"{coef[i]}x^{len(coef) - i -1} + "
         self.polystring = self.polystring[:-3]
 
         self.sidebar.poly_writer(self.polystring)
@@ -103,13 +102,14 @@ class Plotspace(tk.Frame):
 
     def clear(self):
         self.fig.clear()
+        self.sidebar.clear()
 
     def save(self, event=None):
         name = filedialog.asksaveasfilename()
         self.fig.savefig(name)
 
     def set_stage(self, w_size, precision):
-        stage_matrix = detect_stable_stage(
+        stage_matrix, time_matrix = detect_stable_stage(
             self.canvas.ord, self.canvas.times, precision, w_size
         )
-        self.sidebar.matrix_writer(stage_matrix)
+        self.sidebar.matrix_writer(stage_matrix, time_matrix)

@@ -40,6 +40,8 @@ class StageMenu(tk.Toplevel):
         self.button_v = ttk.Button(self, text="Valider", command=self.set_stage)
         self.button_v.place(x=90, y=150)
 
+        self.master.bind("<Return>", self.set_stage)
+
     def set_stage(self):
         try:
             self.w_size_val = float(self.w_size.get())
@@ -50,7 +52,6 @@ class StageMenu(tk.Toplevel):
             mb.showerror("Erreur", "Veuillez entrer des nombres valides (Ex : 46.7)")
         else:
             self.plotspace.set_stage(self.w_size_val, self.v_size_val)
-            self.close()
 
     def close(self):
         self.grab_release()

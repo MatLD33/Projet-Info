@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import datetime as dt
 
 
 def str_to_float(number):
@@ -15,13 +16,17 @@ def str_to_float(number):
 str_to_float_v = np.vectorize(str_to_float)
 
 
-def time_to_float(ts):
-    return sum(float(x) * 60**i for i, x in enumerate(reversed(ts.split(":"))))
+def time_conversion(time):
+    time = time.split(":")
+    hour = int(time[0])
+    minute = int(time[1])
+    second = int(time[2])
+    return dt.datetime(
+        year=2000, month=1, day=1, hour=hour, minute=minute, second=second
+    )
 
 
-time_to_float_v = np.vectorize(
-    time_to_float
-)  # Vectorisation de la fonction time_to_float
+time_conversion_v = np.vectorize(time_conversion)
 
 
 def new_name(path, ext):
@@ -46,7 +51,7 @@ def create_data(path, n, data_type="value"):
     if data_type == "value":
         val = str_to_float_v(data[data_to_plot].values)
     elif data_type == "time":
-        val = time_to_float_v(data[data_to_plot].values)
+        val = time_conversion_v(data[data_to_plot].values)
     x = np.arange(0, len(val))
     return x, data_to_plot, val
 
@@ -101,19 +106,34 @@ def detect_stable_stage(values, times, precision=0.1, window_size=100, plot=Fals
     )  # séparation des paliers
     nb_stages = len(points_stage_by_stage)  # nombre de paliers
 
-    stages_matrix = np.empty((nb_stages, 6))  # matrice des paliers
+    stages_matrix = np.empty((nb_stages, 4))  # matrice des paliers
     stages_matrix[:, 0] = list(map(min, points_stage_by_stage))
     stages_matrix[:, 1] = list(map(max, points_stage_by_stage))
-    stages_matrix[:, 2] = times[stages_matrix[:, 0].astype(int)]
-    stages_matrix[:, 3] = times[stages_matrix[:, 1].astype(int)]
-    stages_matrix[:, 4] = means[stages_matrix[:, 0].astype(int)]
-    stages_matrix[:, 5] = variances[stages_matrix[:, 0].astype(int)]
+    stages_matrix[:, 2] = np.round(means[stages_matrix[:, 0].astype(int)], 3)
+    stages_matrix[:, 3] = np.round(variances[stages_matrix[:, 0].astype(int)], 4)
+
+    time_matrix = np.empty((nb_stages, 3), dtype=dt.datetime)
+    time_matrix[:, 0] = times[stages_matrix[:, 0].astype(int)]
+    time_matrix[:, 1] = times[stages_matrix[:, 1].astype(int)]
+    time_matrix[:, 2] = time_matrix[:, 1] - time_matrix[:, 0]
+
+    for i in range(nb_stages):
+        time_matrix[i, 0] = dt.time(
+            time_matrix[i, 0].hour, time_matrix[i, 0].minute, time_matrix[i, 0].second
+        )
+        time_matrix[i, 1] = dt.time(
+            time_matrix[i, 1].hour, time_matrix[i, 1].minute, time_matrix[i, 1].second
+        )
+        time_matrix[i, 2] = time_matrix[i, 2].total_seconds()
+        if time_matrix[i, 2] < 0:
+            time_matrix[i, 2] += 24 * 3600
+        time_matrix[i, 2] = dt.timedelta(seconds=time_matrix[i, 2])
 
     if plot:
         plt.plot(variances)
         plt.plot([precision] * (n - window_size), "r")
         plt.ylabel("Variance")
-    return stages_matrix
+    return stages_matrix, time_matrix
 
 
 def stables_stage_plot(path, precision=0.1, window_size=100):
@@ -175,8 +195,8 @@ def polynomial_interpolation(x, y, degree):
     Cette fonction permet de faire une interpolation polynomiale
     Elle retourne le polynome d'interpolation
     """
-    poly = np.polynomial.polynomial.Polynomial.fit(x, y, degree)
-    return poly
+    coeffs = np.polyfit(x, y, degree)
+    return np.poly1d(coeffs), coeffs
 
 
 def linear_interpolation(x, y):

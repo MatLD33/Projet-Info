@@ -38,13 +38,11 @@ class Toolbar(tk.Frame):
 
         self.tools.add_commands(
             [
-                "Annuler (Ctrl + Z)",
                 "Paliers",
                 "Rég linéaire",
                 "Interpolation poly (Ctrl + I)",
             ],
             [
-                lambda: print("to bind"),
                 self.menu.createStageMenu,
                 self.plotspace.LinearRegression,
                 self.menu.createInterpolationMenu,

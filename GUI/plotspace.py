@@ -47,8 +47,13 @@ class Plotspace(tk.Frame):
         self.canvas.times = times
         self.canvas.ord = val
         self.canvas.abs = x
+
+        scale = np.log10(np.max(x))
+        if scale > 3:
+            self.canvas.abs = x / 10 ** (scale - 2)
+
         self.canvas.ylab = data_to_plot
-        self.canvas.xlab = "Balayage"
+        self.canvas.xlab = "Balayage réduit"
 
     def set_x(self, path):
         x, data_to_plot, val = create_data(path, 2)
@@ -79,7 +84,7 @@ class Plotspace(tk.Frame):
             self.canvas.abs, self.canvas.ord, deg
         )
 
-        coef = np.round(coef, 3)
+        coef = np.round(coef, 4)
         self.polystring = ""
         for i in range(len(coef)):
             self.polystring += f"{coef[i]}x^{len(coef) - i -1} + "
@@ -90,7 +95,7 @@ class Plotspace(tk.Frame):
         self.sub.plot(
             self.canvas.abs,
             self.canvas.poly(self.canvas.abs),
-            label=f"Interpolation : {self.polystring}",
+            label=f"Sans palier : {self.polystring}",
         )
         self.sub.legend()
         self.canvas.draw()
@@ -107,7 +112,7 @@ class Plotspace(tk.Frame):
             ord_stage += list(mean * np.ones(int(end) - int(start)))
         self.canvas.poly, coef = polynomial_interpolation(abs_stage, ord_stage, deg)
 
-        coef = np.round(coef, 3)
+        coef = np.round(coef, 4)
         self.polystring = ""
         for i in range(len(coef)):
             self.polystring += f"{coef[i]}x^{len(coef) - i -1} + "
@@ -118,7 +123,7 @@ class Plotspace(tk.Frame):
         self.sub.plot(
             self.canvas.abs,
             self.canvas.poly(self.canvas.abs),
-            label=f"Interpolation : {self.polystring}",
+            label=f"Avec paliers : {self.polystring}",
         )
         self.sub.legend()
         self.canvas.draw()
